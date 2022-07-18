@@ -12,6 +12,8 @@ contract TokenBridge is Ownable {
     IERC20 immutable public token;
 
     constructor(address tokenAddress) {
+        require(tokenAddress != address(0x0), "TokenBridge: address can't be a zero");
+
         chainId = getChainId();
         token = IERC20(tokenAddress);
     }
