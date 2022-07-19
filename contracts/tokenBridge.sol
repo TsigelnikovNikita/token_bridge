@@ -13,7 +13,7 @@ contract TokenBridge is Ownable {
 
     uint public nonce = 1;
 
-    mapping (bytes32 => bool) handledMessages;
+    mapping (bytes32 => bool) private handledMessages;
 
     constructor(address tokenAddress) {
         require(tokenAddress != address(0x0), "TokenBridge: address can't be a zero");

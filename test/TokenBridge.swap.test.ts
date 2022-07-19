@@ -4,7 +4,7 @@ import { ethers } from "hardhat";
 import { TokenBridge } from "../typechain-types";
 import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
 
-describe("TokenBridge.constructor", () => {
+describe("TokenBridge.swap", () => {
   const value = 100;
   const chainId = 15;
 
