@@ -16,6 +16,7 @@ contract TokenBridge is Ownable {
     mapping(bytes32 => bool) private handledMessages;
 
     constructor(address tokenAddress) {
+        // solhint-disable-next-line reason-string
         require(tokenAddress != address(0x0), "TokenBridge: address can't be a zero");
 
         chainId = getChainId();
@@ -60,6 +61,7 @@ contract TokenBridge is Ownable {
         bytes32 s
     ) external {
         bytes32 message = keccak256(abi.encodePacked(to, amount, _nonce, chainId, address(this)));
+        // solhint-disable-next-line reason-string
         require(!handledMessages[message], "TokenBridge: message is already handled");
 
         address addr = ecrecover(addHashPrefix(message), v, r, s);
@@ -74,6 +76,7 @@ contract TokenBridge is Ownable {
      */
 
     function getChainId() private view returns (uint256 chainId_) {
+        // solhint-disable-next-line no-inline-assembly
         assembly {
             chainId_ := chainid()
         }
