@@ -13,6 +13,8 @@ contract TokenBridge is Ownable {
 
     uint public nonce = 1;
 
+    mapping (bytes32 => bool) handledMessages;
+
     constructor(address tokenAddress) {
         require(tokenAddress != address(0x0), "TokenBridge: address can't be a zero");
 
@@ -56,6 +58,17 @@ contract TokenBridge is Ownable {
         );
     }
 
+    function reedem(address to, uint amount, uint _nonce, uint8 v, bytes32 r, bytes32 s) external {
+        bytes32 message = keccak256(abi.encodePacked(to, amount, _nonce, chainId, address(this)));
+        require(!handledMessages[message], "TokenBridge: message is already handled");
+
+        address addr = ecrecover(addHashPrefix(message), v, r, s);
+        require(addr == owner(), "TokenBridge: incorrect signature");
+
+        handledMessages[message] = true;
+        token.transfer(to, amount);
+    }
+
     /**
      * PRIVATE & INTERNAL FUNCTIONS
      */
@@ -66,4 +79,8 @@ contract TokenBridge is Ownable {
         }
     }
 
+    function addHashPrefix(bytes32 message) private pure returns (bytes32) {
+        bytes memory prefix = "\x19Ethereum Signed Message:\n32";
+        return keccak256(abi.encodePacked(prefix, message));
+    }
 }
