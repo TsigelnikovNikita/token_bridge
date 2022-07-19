@@ -27,7 +27,7 @@ contract TokenBridge is Ownable {
      * EVENTS
      */
 
-    event Swapped(
+    event SwapInitialized(
         address to,
         uint amount,
         uint nonce,
@@ -45,12 +45,12 @@ contract TokenBridge is Ownable {
      * @param amount amount of tokens
      * @param _chainId ID of blockchain to wich you want to send tokens
      *
-     * Emits {Swapped} event
+     * Emits {SwapInitialized} event
      */
     function swap(address to, uint amount, uint _chainId) external {
         token.transferFrom(msg.sender, address(this), amount);
 
-        emit Swapped(
+        emit SwapInitialized(
             to,
             amount,
             nonce++,

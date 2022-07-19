@@ -31,9 +31,9 @@ describe("TokenBridge.swap", () => {
     ({tokenBridge, deployer, user} = await loadFixture(tokenBridgeInitializeFixture));
   });
 
-  it("Must emit Swapped event correctly", async () => {
+  it("Must emit SwapInitialized event correctly", async () => {
     await expect(tokenBridge.connect(deployer).swap(user.address, value, chainId))
-      .to.emit(tokenBridge, "Swapped")
+      .to.emit(tokenBridge, "SwapInitialized")
       .withArgs(
         user.address,
         value,
