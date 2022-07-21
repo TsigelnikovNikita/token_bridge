@@ -19,7 +19,7 @@ dotenv.config();
 
 const config: HardhatUserConfig = {
   solidity: {
-    version: process.env.COMPILE_VERSION || "^0.8.0",
+    version: process.env.COMPILE_VERSION || "0.8.9",
     settings: {
       optimizer: {
         enabled: process.env.OPTIMIZER == "true",
